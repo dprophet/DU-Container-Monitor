@@ -10,13 +10,13 @@ local version = 1.9
 ---------------
 -- USER VARS --
 ---------------
-local ContainerLCapacity = 153600 --export
-local ContainerMCapacity = 64000 --export
-local ContainerSCapacity = 9600 --export
+local ContainerLCapacity = 192000 --export
+local ContainerMCapacity = 96000 --export
+local ContainerSCapacity = 12000 --export
 local ContainerXSCapacity = 1200 --export
 local Percentage_RED = 10 --export
 local Percentage_GREEN = 60 --export
-local UseContainerHubs = false --export
+local UseContainerHubs = true --export
 local UseDoors = false --export
 local DoorUsers = {'user1', 'user2', 'user3'}
 -- username array like {'user1', 'user2', 'CaseSensitive'}
@@ -36,12 +36,19 @@ local showHudWidget = false --export
 -- Read always left to right, then next line.
 -- YOU CAN SET "EMPTY" if you need a blank space
 
-local SCREENA = {"HEMATITE", "IRON", "BAUXITE", "ALUMINIUM", "COAL", "CARBON", "QUARTZ", "SILICON", "LIMESTONE", "CALCIUM",
-    "MALACHITE", "COPPER", "NATRON", "SODIUM", "CHROMITE", "CHROMIUM", "ACANTHITE", "SILVER", "PYRITE", "SULFUR"}
+local SCREENA = {"HEMATITE", "IRON", "BAUXITE", "ALUMINIUM", "COAL", "CARBON", "QUARTZ", "SILICON",
+    "","",
+    "LIMESTONE", "CALCIUM","MALACHITE", "COPPER", "NATRON", "SODIUM", "CHROMITE", "CHROMIUM"}
 
-local SCREENB = {"PETALITE", "LITHIUM", "GARNIERITE", "NICKEL", "GOLDNUGGETS", "GOLD", "CRYOLITE", "FLUORINE",
-    "COBALTITE", "COBALT", "KOLBECKITE", "SCANDIUM", "RHODONITE", "MANGANESE", "COLUMBITE", "NIOBIUM", "VANADINITE",
-    "VANADIUM", "ILMENITE", "TITANIUM"}
+local SCREENB = {"ACANTHITE", "SILVER", "PYRITE", "SULFUR", "PETALITE", "LITHIUM", "GARNIERITE", "NICKEL", "OXYGEN", "HYDROGEN"}
+
+-- Below are the 2 originals
+--local SCREENA = {"HEMATITE", "IRON", "BAUXITE", "ALUMINIUM", "COAL", "CARBON", "QUARTZ", "SILICON", "LIMESTONE", "CALCIUM",
+--    "MALACHITE", "COPPER", "NATRON", "SODIUM", "CHROMITE", "CHROMIUM", "ACANTHITE", "SILVER", "PYRITE", "SULFUR"}
+
+--local SCREENB = {"PETALITE", "LITHIUM", "GARNIERITE", "NICKEL", "GOLDNUGGETS", "GOLD", "CRYOLITE", "FLUORINE",
+--    "COBALTITE", "COBALT", "KOLBECKITE", "SCANDIUM", "RHODONITE", "MANGANESE", "COLUMBITE", "NIOBIUM", "VANADINITE",
+--    "VANADIUM", "ILMENITE", "TITANIUM"}
 
 -------------------------
 -- AUXILIARY FUNCTIONS --
@@ -289,10 +296,15 @@ function material_readout_cell(name)
     else
         --system.print(name)
         x = getMaterial(name)
-        --system.print("ENTRA 1")
+
         if next(x) == nil then
             --system.print("array vazio")
-            html = [[<div class="rowinfo">PLEASE CONNECT<br>]] .. name .. [[</div>]]
+            system.print("ENTRA(" .. name .. ") 1 x=" .. json.encode(x))
+            if name == "" then
+                html = [[<div class="rowinfo"><br>]] .. name .. [[</div>]]
+            else
+                html = [[<div class="rowinfo">PLEASE CONNECT<br>]] .. name .. [[</div>]]
+            end
         else
             percentage = getFromArray(x, 9)
             description = getFromArray(x, 6)
